@@ -15,15 +15,24 @@ hw_size = hw.get_size()
 
 pygame.mouse.set_visible(False)
 
+x, y = 0, 0
+
 clock = pygame.time.Clock()
 while True:
     clock.tick(40)
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             sys.exit()
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_RIGHT:
+                x += 5
+            if event.key == pygame.K_LEFT:
+                x -=5
+            if event.key == pygame.K_DOWN:
+                y += 5
+            if event.key == pygame.K_UP:
+                y -= 5
     screen.fill((0,0,0))
-    mouse_pos = pygame.mouse.get_pos()
-    x, y = mouse_pos
     if x + hw_size[0] > window_size[0]:
         x = 800 - hw_size[0]
         # sound.stop()
@@ -33,9 +42,16 @@ while True:
         # sound.stop()
         # sound.play()
 
-    # if x==0 or y==0:
+    if x <= 0:
+        x = 0
         # sound.stop()
         # sound.play()
+    
+    if y <= 0:
+        y = 0
+        # sound.stop()
+        # sound.play()
+        
 
     screen.blit(hw, (x,y))   
     pygame.display.update()
