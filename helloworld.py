@@ -21,12 +21,11 @@ while True:
         if event.type == pygame.QUIT:
             sys.exit()
     screen.fill((0,0,0))
-    screen.blit(hw, (x,y))
-
-    x += 5 * direction_x
-    y += 5 * direction_y
-    if x + hw_size[0] > 800 or x <= 0:
-        direction_x *= -1
-    if y + hw_size[1] > 600 or y <= 0:
-        direction_y *= -1    
+    mouse_pos = pygame.mouse.get_pos()
+    x, y = mouse_pos
+    if x + hw_size[0] > 800:
+        x = 800 - hw_size[0]
+    if y + hw_size[1] > 600:
+        y = 600 - hw_size[1]
+    screen.blit(hw, (x,y))   
     pygame.display.update()
