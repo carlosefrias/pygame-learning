@@ -1,1 +1,1 @@
-# Learning pygame from the pluralsing course "Game programming with python and pygame"
+# Learning pygame from the pluralsight course "Game programming with python and pygame"

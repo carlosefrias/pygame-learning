@@ -1,19 +1,20 @@
 import pygame, sys
 
 pygame.init()
+# pygame.mixer.init()
 
 window_size = (800, 600)
 
 screen = pygame.display.set_mode(window_size)
 
-myriadProFont = pygame.font.SysFont("Myriad Pro", 48)
-
-hw = myriadProFont.render("Hello world!", 1, (255, 0, 255), (255, 255, 255))
+hw = pygame.image.load('PS circle.png')
 
 hw_size = hw.get_size()
-# direction_x, direction_y = 1, 1
 
-# x, y = 0, 0
+# sound = pygame.mixer.Sound('Pluralsight.wav')
+
+pygame.mouse.set_visible(False)
+
 clock = pygame.time.Clock()
 while True:
     clock.tick(40)
@@ -25,7 +26,16 @@ while True:
     x, y = mouse_pos
     if x + hw_size[0] > window_size[0]:
         x = 800 - hw_size[0]
+        # sound.stop()
+        # sound.play()
     if y + hw_size[1] > window_size[1]:
         y = 600 - hw_size[1]
+        # sound.stop()
+        # sound.play()
+
+    # if x==0 or y==0:
+        # sound.stop()
+        # sound.play()
+
     screen.blit(hw, (x,y))   
     pygame.display.update()
