@@ -18,7 +18,7 @@ class Breakout:
 
         self.__pad = Pad((0,0),0)
         self.__balls = [
-            Ball((0,0), 0, self)
+            Ball((0,0), pygame.image.load(GameConstants.SPRITE_BALL), self)
         ]
         pygame.init()
         # pygame.mixer.init()
@@ -42,7 +42,9 @@ class Breakout:
     def start(self):
         while True:
             self.__clock.tick(100)
+
             self.screen.fill((0,0,0))
+            
             currentScene = self.__scenes[self.__currentScene]
             currentScene.handleEvents(pygame.event.get())
             currentScene.render()
@@ -50,38 +52,39 @@ class Breakout:
             pygame.display.update()
     
     def changeScene(self, scene):
-        pass
+        self.__currentScene = scene
     
     def getLevel(self):
-        pass
+        return self.__level
     
     def getScore(self):
-        pass
+        return self.__score
     
     def increaseScore(self, score):
-        pass
+        self.__score += score
     
     def getLives(self):
-        pass
+        return self.__lives
     
     def getBalls(self):
-        pass
+        return self.__balls
     
     def getPad(self):
-        pass
+        return self.__pad
     
     def playSound(self, soundClip):
-        pass
+        sound = self.__sounds[soundClip]
+
+        sound.stop()
+        sound.play()
     
     def reduceLives(self):
-        pass
+        self.__lives -= 1
     
     def increaseLives(self):
-        pass
+        self.__lives += 1
     
     def reset(self):
         pass
 
-game = Breakout()
-
-game.start()
+Breakout().start()
