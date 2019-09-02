@@ -7,5 +7,5 @@ class SpeedBrick(Brick):
     def hit(self):
         game = self.getGame()
         for ball in game.getBalls():
-            ball.setSpeed(ball.getSpeed + 1)
+            ball.setSpeed(ball.getSpeed() + 1)
         super(SpeedBrick, self).hit()
