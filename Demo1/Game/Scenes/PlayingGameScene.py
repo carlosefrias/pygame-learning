@@ -1,4 +1,5 @@
 from Scenes.Scene import Scene
+from Shared import GameConstants
 import pygame
 
 class PlayingGameScene(Scene):
@@ -21,6 +22,7 @@ class PlayingGameScene(Scene):
             for brick in game.getLevel().getBricks():
                 if not brick.isDestroyed() and ball.intersects(brick):
                     brick.hit()
+                    game.increaseScore(brick.getHitPoints())
                     ball.changeDirection(brick)
                     break
 
@@ -37,6 +39,16 @@ class PlayingGameScene(Scene):
                     
         pad.setPosition((pygame.mouse.get_pos()[0], pad.getPosition()[1]))
         game.screen.blit(pad.getSprite(), pad.getPosition())
+
+        self.clearText()
+        self.addText(f'Your score: {str(game.getScore())}',
+                    x = 0,
+                    y = GameConstants.SCREEN_SIZE[1] - 60,
+                    size = 30)
+        self.addText(f'Lives: {str(game.getLives())}',
+                    x = 0,
+                    y = GameConstants.SCREEN_SIZE[1] - 30,
+                    size = 30)
 
     def handleEvents(self, events):
         super(PlayingGameScene, self).handleEvents(events)
