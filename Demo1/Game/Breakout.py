@@ -16,7 +16,9 @@ class Breakout:
         self.__level = Level(self)
         self.__level.load(0)
 
-        self.__pad = Pad((0,0),0)
+        self.__pad = Pad((GameConstants.SCREEN_SIZE[0]/2,
+                        GameConstants.SCREEN_SIZE[1] - GameConstants.PAD_SIZE[1]),
+                        pygame.image.load(GameConstants.SPRITE_PAD))
         self.__balls = [
             Ball((400,400), pygame.image.load(GameConstants.SPRITE_BALL), self)
         ]

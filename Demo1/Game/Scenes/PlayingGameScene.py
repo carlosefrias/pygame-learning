@@ -10,6 +10,7 @@ class PlayingGameScene(Scene):
         super(PlayingGameScene, self).render()
 
         game = self.getGame()
+        pad = game.getPad()
         
         balls = game.getBalls()
         for ball in balls:
@@ -23,6 +24,9 @@ class PlayingGameScene(Scene):
                     ball.changeDirection(brick)
                     break
 
+            if ball.intersects(pad):
+                ball.changeDirection(pad)
+
             ball.updatePosition()
         
             game.screen.blit(ball.getSprite(), ball.getPosition())
@@ -30,6 +34,9 @@ class PlayingGameScene(Scene):
         for brick in game.getLevel().getBricks():
             if not brick.isDestroyed():
                 game.screen.blit(brick.getSprite(), brick.getPosition())
+                    
+        pad.setPosition((pygame.mouse.get_pos()[0], pad.getPosition()[1]))
+        game.screen.blit(pad.getSprite(), pad.getPosition())
 
     def handleEvents(self, events):
         super(PlayingGameScene, self).handleEvents(events)
@@ -37,3 +44,6 @@ class PlayingGameScene(Scene):
         for event in events:
             if event.type == pygame.QUIT:
                 exit()
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                for ball in self.getGame().getBalls():
+                    ball.setMotion(True)
