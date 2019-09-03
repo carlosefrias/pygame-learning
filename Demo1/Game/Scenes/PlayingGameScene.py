@@ -1,12 +1,12 @@
-from Scenes.Scene import Scene
-from Shared import GameConstants
 import pygame
+from Scenes.Scene import Scene
+from Shared import *
 
 class PlayingGameScene(Scene):
 
     def __init__(self, game):
-        super(PlayingGameScene, self).__init__(game)
-    
+         super(PlayingGameScene, self).__init__(game)
+
     def render(self):
         super(PlayingGameScene, self).render()
 
@@ -16,7 +16,6 @@ class PlayingGameScene(Scene):
             game.changeScene(GameConstants.GAMEOVER_SCENE)
 
         pad = game.getPad()
-        
         balls = game.getBalls()
         for ball in balls:
             for ball2 in balls:
@@ -36,27 +35,29 @@ class PlayingGameScene(Scene):
             ball.updatePosition()
 
             if ball.isBallDead():
-                ball.setMotion(False)
+                ball.setMotion(0)
                 game.reduceLives()
 
             game.screen.blit(ball.getSprite(), ball.getPosition())
-        
+
         for brick in game.getLevel().getBricks():
             if not brick.isDestroyed():
                 game.screen.blit(brick.getSprite(), brick.getPosition())
-                    
+
+
         pad.setPosition((pygame.mouse.get_pos()[0], pad.getPosition()[1]))
         game.screen.blit(pad.getSprite(), pad.getPosition())
 
         self.clearText()
-        self.addText(f'Your score: {str(game.getScore())}',
-                    x = 0,
-                    y = GameConstants.SCREEN_SIZE[1] - 60,
-                    size = 30)
-        self.addText(f'Lives: {str(game.getLives())}',
-                    x = 0,
-                    y = GameConstants.SCREEN_SIZE[1] - 30,
-                    size = 30)
+
+        self.addText("Your Score: " + str(game.getScore()),
+                     x = 0,
+                     y = GameConstants.SCREEN_SIZE[1] - 60, size = 30)
+
+
+        self.addText("Lives: " + str(game.getLives()),
+                     x = 0,
+                     y = GameConstants.SCREEN_SIZE[1] - 30, size = 30)
 
     def handleEvents(self, events):
         super(PlayingGameScene, self).handleEvents(events)
@@ -64,6 +65,7 @@ class PlayingGameScene(Scene):
         for event in events:
             if event.type == pygame.QUIT:
                 exit()
+
             if event.type == pygame.MOUSEBUTTONDOWN:
                 for ball in self.getGame().getBalls():
-                    ball.setMotion(True)
+                    ball.setMotion(1)
